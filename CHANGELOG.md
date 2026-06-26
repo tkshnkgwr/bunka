@@ -5,6 +5,29 @@
 このファイルのフォーマットは [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) に基づいており、
 このプロジェクトは [セマンティック バージョニング](https://semver.org/spec/v2.0.0.html) に準拠しています。
 
+## [0.2.2] - 2026-06-26
+
+### 変更 (Changed)
+- **CI/CDワークフローの最新化と高速化**:
+  - [.github/workflows/ci.yml](.github/workflows/ci.yml) において、`actions/checkout` を `v4` にアップグレードし、ビルドを高速化するために `Swatinem/rust-cache@v2` アクションを追加。
+  - [.github/workflows/release.yml](.github/workflows/release.yml) において、`actions/checkout` を `v4`、`softprops/action-gh-release` を `v2` にアップグレード。
+- **プロジェクトテンプレートの汎用化**:
+  - [docs/project_template_guide.md](docs/project_template_guide.md) 内の各種 Actions のバージョンを最新版に更新し、CI にキャッシュアクションを追加。
+  - テンプレート内のバイナリ名等の表記をプレースホルダー `<YOUR_APP_NAME>` に変更し、他プロジェクトへ導入しやすいように汎用化。
+- **開発ガイドラインの調整**:
+  - [.agents/AGENTS.md](.agents/AGENTS.md) の「自動化設定の維持ルール」に、最新のアクションバージョンやキャッシュ設定の維持についての文言を追加。
+
+## [0.2.1] - 2026-06-26
+
+### 追加 (Added)
+- **Dependabot による依存ライブラリの自動アップデート設定**:
+  - [.github/dependabot.yml](.github/dependabot.yml) を新規追加し、毎週 Cargo 依存関係と GitHub Actions ワークフローの更新をチェックするように構成。
+- **GitHub Releases への自動デプロイワークフロー**:
+  - [.github/workflows/release.yml](.github/workflows/release.yml) を新規追加。`v*` タグプッシュ時に Windows 向け CLI バイナリおよび GUI バイナリをビルドし、自動的に GitHub Release へ zip アーカイブをアップロードするワークフローを構築。
+- **開発用エディタ設定の統一**:
+  - プロジェクト全体で一貫したコーディングスタイルを維持するための [.editorconfig](.editorconfig) を追加。
+  - VS Code 利用者向けの設定を共通化する [.vscode/settings.json](.vscode/settings.json) を追加。
+
 ## [0.2.0] - 2026-06-26
 
 ### 追加 (Added)

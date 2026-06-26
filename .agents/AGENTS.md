@@ -59,3 +59,11 @@ AIがコードの変更、機能追加、リファクタリングなどを行う
   コードの追加・変更を行った際は、必ず `cargo test` を実行し、すべての自動単体テストケースがパスすることを確認すること。
 - **テストケースの追加**:
   新たな機能（ロジック）を追加した場合は、対応する単体テスト（`#[test]`）を必ず追加し、テストによるカバー率と信頼性を維持すること。
+
+## 8. 開発環境および自動化設定の維持ルール
+- **エディタ設定の厳守**:
+  - [`.editorconfig`](../.editorconfig) および [`.vscode/settings.json`](../.vscode/settings.json) で規定されたコーディングスタイル（インデント幅、改行コード LF、UTF-8 など）を遵守し、プロジェクト全体の書式の一貫性を維持すること。
+- **CI/CD・自動アップデート設定の維持**:
+  - [`.github/workflows/ci.yml`](../.github/workflows/ci.yml) (ビルド高速化のための `rust-cache` 含む), [`.github/workflows/release.yml`](../.github/workflows/release.yml) および [`.github/dependabot.yml`](../.github/dependabot.yml) を破壊しないこと。
+  - 依存アクションのバージョン（`checkout@v4`, `action-gh-release@v2` など）やビルド構成の変更時には、これらの構成ファイルも動作可能な状態に維持し、整合性を保つこと。
+

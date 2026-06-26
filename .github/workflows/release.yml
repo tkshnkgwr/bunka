@@ -1,0 +1,56 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  build-release:
+    name: Build & Release (Windows)
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      # CLI版のビルド
+      - name: Build CLI release
+        run: cargo build --release --verbose
+
+      # CLI版バイナリの退避
+      - name: Package CLI binary
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force -Path target/dist
+          Copy-Item -Path target/release/bunka.exe -Destination target/dist/bunka.exe -Force
+
+      # GUI版のビルド (gui feature を有効化)
+      - name: Build GUI release
+        run: cargo build --release --features gui --verbose
+
+      # GUI版バイナリの退避とリネーム
+      - name: Package GUI binary
+        shell: pwsh
+        run: |
+          Copy-Item -Path target/release/bunka.exe -Destination target/dist/bunka-gui.exe -Force
+
+      # 両方のバイナリを含む zip アーカイブの作成
+      - name: Archive production binaries
+        shell: pwsh
+        run: |
+          Compress-Archive -Path target/dist/bunka.exe, target/dist/bunka-gui.exe -DestinationPath target/dist/bunka-windows-x64.zip -Force
+
+      # GitHub Release の作成とアップロード
+      - name: Create GitHub Release and Upload Asset
+        uses: softprops/action-gh-release@v2
+        with:
+          files: target/dist/bunka-windows-x64.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

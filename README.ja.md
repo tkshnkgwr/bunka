@@ -83,7 +83,17 @@ $ bunka invalid
 - [構成図・フローチャート (docs/DIAGRAM.md)](docs/DIAGRAM.md) - 処理フローと構造図。
 - [フットプリント記録 (docs/FOOTPRINTS.md)](docs/FOOTPRINTS.md) - バイナリサイズとメモリ使用量の実測データ。
 - [テスト検証報告書 (docs/TEST_REPORT.md)](docs/TEST_REPORT.md) - テストケースと実行結果。
+- [プロジェクト初期設定テンプレートガイド (docs/project_template_guide.md)](docs/project_template_guide.md) - エディタ、CI/CD、Dependabotの設定テンプレート。
+
+
+## 開発 (Development)
+
+本リポジトリには、エディタ設定の統一や自動化ワークフローが組み込まれています：
+- **エディタ設定の統一**: コードの書式を一貫させるため、[.editorconfig](.editorconfig) および VS Code 用設定 [.vscode/settings.json](.vscode/settings.json) を提供しています。
+- **CI/CD**: プルリクエストやメインブランチへのプッシュ時に [.github/workflows/ci.yml](.github/workflows/ci.yml) による自動テストを実行します。また、リリースタグ（`v*`）のプッシュ時には、Windows 向け CLI 版および GUI 版バイナリをビルドし、zip アーカイブにまとめて GitHub Releases に自動デプロイする [.github/workflows/release.yml](.github/workflows/release.yml) を設定しています。
+- **自動アップデート (Dependabot)**: 依存ライブラリや GitHub Actions の更新を週次でチェックし、PR を自動作成する [.github/dependabot.yml](.github/dependabot.yml) を設定しています。
 
 ## ライセンス
 
 本プロジェクトは [MIT ライセンス](LICENSE) の下でオープンソースとして公開されています。詳細については [LICENSE](LICENSE) ファイルを参照してください。
+

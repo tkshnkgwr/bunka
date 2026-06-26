@@ -83,7 +83,17 @@ For more detailed documentation, please refer to:
 - [System Diagrams (DIAGRAM.md)](docs/DIAGRAM.md) - Flowcharts and architecture.
 - [Performance & Footprints (FOOTPRINTS.md)](docs/FOOTPRINTS.md) - Binary size and memory usage statistics.
 - [Test Report (TEST_REPORT.md)](docs/TEST_REPORT.md) - Test cases and verification steps.
+- [Project Setup Template Guide (project_template_guide.md)](docs/project_template_guide.md) - Standard configurations for editors, CI/CD, and Dependabot.
+
+
+## Development
+
+This repository includes unified editor configurations and automated workflows:
+- **Editor Configurations**: [.editorconfig](.editorconfig) and [.vscode/settings.json](.vscode/settings.json) are provided to ensure consistent code styling.
+- **CI/CD**: Automatic testing is run on PRs/pushes via [.github/workflows/ci.yml](.github/workflows/ci.yml). Automatic release binaries (both CLI and GUI versions in a zip file) are created and uploaded to GitHub Releases when pushing a tag (`v*`) via [.github/workflows/release.yml](.github/workflows/release.yml).
+- **Dependabot**: Automatically checks for dependency updates weekly ([.github/dependabot.yml](.github/dependabot.yml)).
 
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+

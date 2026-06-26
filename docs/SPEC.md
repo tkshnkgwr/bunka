@@ -79,3 +79,23 @@ $ bunka 0.142857 -d 1000 -t 1e-4
 - **枠なしウィンドウのドラッグ移動**:
   - タイトルバーを持たないため、最上部の見出しエリアなどをドラッググリップとします。
   - グリップがドラッグされた際、`frame.drag_window()` を呼び出すことでネイティブウィンドウを移動させています。
+
+---
+
+## 3. 開発およびリリース・運用仕様
+
+### 3.1 開発用エディタ設定
+プロジェクト全体のコード品質および書式を一貫させるため、以下の設定ファイルを適用しています。
+- **[.editorconfig](../.editorconfig)**: 改行コードを `LF`、文字コードを `UTF-8 (BOMなし)`、インデント幅を `4`（Markdown/YAML等は `2`）に統一します。
+- **[.vscode/settings.json](../.vscode/settings.json)**: VS Code 利用者向けに、保存時の自動整形（rustfmt）の有効化、インデントおよび文字コード設定を共有します。
+
+### 3.2 CI/CD および自動リリース仕様
+- **継続的インテグレーション (CI)**:
+  - プッシュおよびプルリクエスト発生時に Windows 環境で自動ビルドと `cargo test` を実行し、コードの健全性を保ちます（[.github/workflows/ci.yml](../.github/workflows/ci.yml)）。
+- **継続的デプロイ (CD)**:
+  - リリースタグ（`v*`）のプッシュをトリガーとして、Windows 向けに CLI 版および GUI 版バイナリを双方リリースビルドし、1つの zip アーカイブ（`bunka-windows-x64.zip`）にまとめて GitHub Releases に自動デプロイします（[.github/workflows/release.yml](../.github/workflows/release.yml)）。
+
+### 3.3 依存関係の自動更新
+- **[dependabot.yml](../.github/dependabot.yml)**:
+  - GitHub Actions の Action バージョンおよび Cargo の依存ライブラリを週次で監視し、更新プログラムがある場合は自動的にプルリクエストを作成します。
+

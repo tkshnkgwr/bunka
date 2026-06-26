@@ -7,7 +7,7 @@
 ## 1. テスト実行環境
 
 - **オペレーティングシステム**: Windows 11 Home x64
-- **Rust バージョン**: `rustc 1.80.0` (または edition 2024 対応コンパイラ)
+- **Rust バージョン**: `rustc 1.94.1` (または edition 2024 対応コンパイラ)
 - **シェル**: PowerShell 7 (`pwsh`)
 - **テスト対象プロファイル**: リリースビルド (`target/release/bunka.exe`)
 
@@ -26,7 +26,7 @@
 | TC-03 | `3.14159265` | `355/113` | `355/113` | **PASS** | 円周率 $\pi$ の標準的な近似分数（密率） |
 | TC-04 | `0.0` | `0/1` | `0/1` | **PASS** | ゼロ値に対する境界値処理 |
 | TC-05 | `-0.5` | `-1/2` | `-1/2` | **PASS** | 負の小数点数に対する処理 |
-| TC-08 | `--version` | `bunka 0.2.0` | `bunka 0.2.0` | **PASS** | バージョン情報表示オプション（Exit Code 0） |
+| TC-08 | `--version` | `bunka 0.2.2` | `bunka 0.2.2` | **PASS** | バージョン情報表示オプション（Exit Code 0） |
 | TC-09 | `--help` | 詳細ヘルプ表示 | 詳細ヘルプ表示 | **PASS** | ヘルプ表示オプション（Exit Code 0） |
 | TC-10 | `3.14159265 -d 100` | `22/7` | `22/7` | **PASS** | 最大分母を100に制限したため、$\pi$ の近似として $22/7$ が採用される |
 | TC-11 | `0.142857 -t 1e-10 -d 10000000` | `142857/1000000` | `142857/1000000` | **PASS** | 許容誤差を非常に小さくし最大分母を拡張したことで、元の小数通りの分数に変換 |
@@ -36,7 +36,7 @@
 PS bunka> target/release/bunka.exe 0.142857
 1/7
 PS bunka> target/release/bunka.exe --version
-bunka 0.2.0
+bunka 0.2.2
 PS bunka> target/release/bunka.exe --help
 bunka - 小数点数から分数への近似変換ツール
 
@@ -142,5 +142,5 @@ test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; fini
 ```
 
 すべての単体テストケースにおいて期待通りの値が計算され、**PASS (ok)** することを確認済みです。
-また、GitHub Actions 上でこれらのテストが PR やプッシュ時に自動実行される CI 環境（`.github/workflows/ci.yml`）も構築完了しています。
+また、GitHub Actions 上でこれらのテストが PR やプッシュ時に自動実行される CI 環境（`.github/workflows/ci.yml`、ビルドキャッシュに `Swatinem/rust-cache@v2` を導入済み）も構築完了しています。
 
