@@ -71,9 +71,9 @@ graph TD
 
 ---
 
-## 2. 計画中の GUI アーキテクチャ構成
+## 2. GUI 実行処理フロー（アーキテクチャ構成）
 
-GUI版は、`egui`/`eframe` が制御するインタラクティブな状態更新ループで動作する想定です。
+GUI版は、`egui`/`eframe` が制御するインタラクティブな状態更新ループで動作します。
 
 ```mermaid
 graph TD
@@ -82,21 +82,33 @@ graph TD
     MutexCheck -- すでに起動中 --> Terminate[即座にプロセスを正常終了]
     MutexCheck -- 未起動 --> InitOptions[NativeOptions の初期化]
     
-    InitOptions --> SetWindowProps["transparent: true (背景透過)<br>decorated: false (枠なし) に設定"]
+    InitOptions --> SetWindowProps["transparent: true (背景透過)<br>decorated: false (枠なし)<br>always_on_top: true (最前面)<br>inner_size: 320x220 (固定サイズ)"]
     SetWindowProps --> RunApp[eframe アプリループ起動]
     
-    subgraph AppUpdateLoop [eframe::App::update]
-        RenderUI[UI要素の描画] --> DragGrip{グリップがドラッグされた?}
+    subgraph AppUpdateLoop [eframe::App::ui]
+        RenderUI["カスタム半透明角丸フレームの描画"] --> RenderHeader["ヘッダー（タイトル・Xボタン）の描画"]
+        
+        RenderHeader --> DragGrip{ヘッダーがドラッグされた?}
         DragGrip -- はい --> StartDrag["ViewportCommand::StartDrag を送信<br>(ウィンドウ移動開始)"]
-        DragGrip -- いいえ --> RenderInputs[テキスト・スライダー入力欄の描画]
+        
+        DragGrip -- いいえ --> CloseCheck{Xボタンがクリックされた?}
+        CloseCheck -- はい --> CloseApp["ViewportCommand::Close を送信<br>(アプリ終了)"]
+        
+        CloseCheck -- いいえ --> RenderInputs["入力エリア（小数値入力・スライダー）の描画"]
         
         RenderInputs --> InputChange{入力値が変更された?}
         InputChange -- はい --> Recalculate["連分数展開による再計算 (recalculate)"]
-        InputChange -- いいえ --> Idle[次のフレーム/描画要求まで待機]
+        InputChange -- いいえ --> RenderResult["結果表示エリア（変換結果・Copyボタン）の描画"]
         
-        Recalculate --> UpdateUI[画面上の結果テキストを更新]
-        UpdateUI --> Idle
+        Recalculate --> RenderResult
+        
+        RenderResult --> CopyCheck{Copyボタンがクリックされた?}
+        CopyCheck -- はい --> CopyClip["ctx.copy_text() を実行<br>(クリップボードに分数コピー)"]
+        CopyCheck -- いいえ --> Idle[次のフレーム/描画要求まで待機]
+        
+        CopyClip --> Idle
     end
     
     RunApp --> AppUpdateLoop
 ```
+
