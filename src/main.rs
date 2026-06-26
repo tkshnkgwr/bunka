@@ -229,72 +229,70 @@ impl BunkaGuiApp {
 
 #[cfg(feature = "gui")]
 impl eframe::App for BunkaGuiApp {
-    fn update(&mut self, ctx: &egui::Context, _frame: &mut eframe::Frame) {
+    fn ui(&mut self, ui: &mut egui::Ui, _frame: &mut eframe::Frame) {
         // CPU負荷低減のため1秒に1回更新
-        ctx.request_repaint_after(std::time::Duration::from_secs(1));
+        ui.ctx().request_repaint_after(std::time::Duration::from_secs(1));
 
-        egui::CentralPanel::default().show(ctx, |ui| {
-            // タイトルバー代わりのドラッグ移動グリップ領域
-            let response = ui.horizontal(|ui| {
-                ui.heading("BUNKA - DECIMAL TO FRACTION");
-            }).response;
+        // タイトルバー代わりのドラッグ移動グリップ領域
+        let response = ui.horizontal(|ui| {
+            ui.heading("BUNKA - DECIMAL TO FRACTION");
+        }).response;
 
-            if response.dragged() {
-                _frame.drag_window();
-            }
+        if response.dragged() {
+            ui.ctx().send_viewport_cmd(egui::ViewportCommand::StartDrag);
+        }
 
-            ui.separator();
+        ui.separator();
 
-            ui.horizontal(|ui| {
-                ui.label("Decimal:");
-                if ui.text_edit_singleline(&mut self.input_str).changed() {
-                    self.recalculate();
-                }
-            });
-
-            let old_max_den = self.max_den;
-            let old_tol_exp = self.tolerance_exp;
-
-            ui.add(egui::Slider::new(&mut self.max_den, 10..=100000).text("Max Den"));
-            ui.add(egui::Slider::new(&mut self.tolerance_exp, -9..=-1).text("Tolerance 10^x"));
-
-            if old_max_den != self.max_den || old_tol_exp != self.tolerance_exp {
+        ui.horizontal(|ui| {
+            ui.label("Decimal:");
+            if ui.text_edit_singleline(&mut self.input_str).changed() {
                 self.recalculate();
             }
+        });
 
-            ui.separator();
-            ui.vertical_centered(|ui| {
-                ui.label("RESULT (IMPACT)");
-                ui.heading(format!("{}/{}", self.numerator, self.denominator));
-            });
+        let old_max_den = self.max_den;
+        let old_tol_exp = self.tolerance_exp;
+
+        ui.add(egui::Slider::new(&mut self.max_den, 10..=100000).text("Max Den"));
+        ui.add(egui::Slider::new(&mut self.tolerance_exp, -9..=-1).text("Tolerance 10^x"));
+
+        if old_max_den != self.max_den || old_tol_exp != self.tolerance_exp {
+            self.recalculate();
+        }
+
+        ui.separator();
+        ui.vertical_centered(|ui| {
+            ui.label("RESULT (IMPACT)");
+            ui.heading(format!("{}/{}", self.numerator, self.denominator));
         });
     }
 }
 
 #[cfg(feature = "gui")]
 fn main() {
-    use windows::core::w;
     use windows::Win32::System::Threading::CreateMutexW;
     use windows::Win32::Foundation::GetLastError;
     use windows::Win32::Foundation::ERROR_ALREADY_EXISTS;
 
     // Mutexの名前を作成して二重起動チェック
     unsafe {
-        let _handle = CreateMutexW(None, true, w!("Global\\BunkaGuiAppMutex"));
+        let _handle = CreateMutexW(None, true, windows::core::w!("Global\\BunkaGuiAppMutex"));
         if GetLastError() == ERROR_ALREADY_EXISTS {
             return;
         }
     }
 
     let options = eframe::NativeOptions {
-        decorated: false,
-        transparent: true,
+        viewport: egui::ViewportBuilder::default()
+            .with_decorations(false)
+            .with_transparent(true),
         ..Default::default()
     };
 
     eframe::run_native(
         "BUNKA - DECIMAL TO FRACTION",
         options,
-        Box::new(|_cc| Box::new(BunkaGuiApp::default())),
+        Box::new(|_cc| Ok(Box::new(BunkaGuiApp::default()))),
     ).unwrap();
 }

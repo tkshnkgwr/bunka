@@ -5,6 +5,19 @@
 このファイルのフォーマットは [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) に基づいており、
 このプロジェクトは [セマンティック バージョニング](https://semver.org/spec/v2.0.0.html) に準拠しています。
 
+## [0.3.0] - 2026-06-26
+
+### 変更 (Changed)
+- **GUI依存ライブラリのメジャーアップデートとAPI追従**:
+  - `eframe` クレートを `0.22.0` から `0.35.0` へアップデート。それに伴い `eframe::App` の `update` メソッドから `ui` メソッドへの変更に対応。
+  - `NativeOptions` での `decorated` / `transparent` 設定を最新の `ViewportBuilder` 経由に修正。
+  - `_frame.drag_window()` によるウィンドウドラッグ処理を `ui.ctx().send_viewport_cmd(egui::ViewportCommand::StartDrag)` へ変更。
+  - `run_native` アプリ生成クロージャが `Result` を返すように変更されたことに伴い、戻り値を `Ok(...)` で包み込むように変更。
+- **Windows API依存関係のアップデート**:
+  - `windows` クレートを `0.48.0` から `0.62.0` へアップデート。`windows::core::w` からインポート不可になった問題に対し、マクロ `windows::core::w!` を直接修飾して呼び出す形式に修正。
+- **開発テンプレートの最新化**:
+  - [docs/project_template_guide.md](docs/project_template_guide.md) に最新の `Cargo.toml` 依存ライブラリ構成テンプレート（eframe 0.35.0 / windows 0.62.0）を追記。
+
 ## [0.2.2] - 2026-06-26
 
 ### 変更 (Changed)

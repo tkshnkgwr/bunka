@@ -209,3 +209,35 @@ codegen-units = 1     # コード生成単位を1に統合（LLVMによるイン
 panic = 'abort'       # パニック時に即時終了（スタック展開用のメタデータと展開ロジックを排除）
 strip = true          # シンボル情報とデバッグ情報を実行ファイルから完全に削除
 ```
+
+---
+
+## 5. 依存ライブラリの標準設定例 (`Cargo.toml`)
+
+CLI / GUI 共通での起動制御（二重起動防止）や、最前面・透過・枠なしウィンドウ（eframe/egui）を利用する際の、標準的なクレート構成例です。
+
+**設定パス**: `Cargo.toml` の `[dependencies]` / `[features]`
+
+```toml
+[dependencies]
+# eframe (egui フレームワーク本体): GUI表示に使用
+eframe = { version = "0.35.0", optional = true }
+
+# windows (Windows APIの呼び出し): 名前付きMutexによる二重起動制御に使用
+windows = {
+    version = "0.62.0",
+    features = [
+        "Win32_System_Threading",
+        "Win32_Foundation",
+        "Win32_Security"
+    ],
+    optional = true
+}
+
+# winapi (他のWin32制御に使用、必要に応じて)
+winapi = { version = "0.3.9", features = ["winuser", "windef"], optional = true }
+
+[features]
+default = []
+gui = ["dep:eframe", "dep:windows", "dep:winapi"]
+```

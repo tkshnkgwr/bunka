@@ -1,11 +1,11 @@
 [package]
 name = "bunka"
-version = "0.2.2"
+version = "0.3.0"
 edition = "2024"
 license = "MIT"
 
 [dependencies]
-eframe = { version = "0.22.0", optional = true }
+eframe = { version = "0.35.0", optional = true }
 windows = { version = "0.62.2", features = ["Win32_System_Threading", "Win32_Foundation", "Win32_Security"], optional = true }
 winapi = { version = "0.3.9", features = ["winuser", "windef"], optional = true }
 
