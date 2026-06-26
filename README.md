@@ -1,5 +1,7 @@
 # Bunka
 
+[[日本語版はこちら]](README.ja.md)
+
 `bunka` is a lightweight Rust command-line utility that approximates any decimal (floating-point number) into its fractional representation (numerator/denominator) using the **Continued Fraction Expansion** algorithm.
 
 ## Features

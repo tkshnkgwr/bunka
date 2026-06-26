@@ -1,5 +1,7 @@
 # Bunka (分数近似ツール)
 
+[[English]](README.md)
+
 `bunka` は、与えられた小数点数（浮動小数点数）を**連分数展開（Continued Fraction Expansion）アルゴリズム**を用いて、近似的な分数（分子/分母）に変換する軽量な Rust 製コマンドラインツールです。
 
 ## 特徴

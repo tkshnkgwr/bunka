@@ -5,7 +5,6 @@ pub mod cli;
 pub mod gui;
 
 /// 連分数展開アルゴリズムによる分数近似
-
 pub fn approximate_fraction(value: f64, max_denominator: u64, tolerance: f64) -> (i64, u64, f64) {
     if value == 0.0 {
         return (0, 1, 0.0);
@@ -65,6 +64,7 @@ mod tests {
     use super::*;
 
     #[test]
+    #[allow(clippy::approx_constant)]
     fn test_approximate_fraction_positive() {
         let (num, den, _) = approximate_fraction(0.142857, 100000, 1e-6);
         assert_eq!(num, 1);

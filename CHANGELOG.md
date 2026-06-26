@@ -5,6 +5,17 @@
 このファイルのフォーマットは [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) に基づいており、
 このプロジェクトは [セマンティック バージョニング](https://semver.org/spec/v2.0.0.html) に準拠しています。
 
+## [0.4.1] - 2026-06-26
+
+### 変更 (Changed)
+- **README.mdとREADME.ja.mdの相互リンク**:
+  - `README.md` に日本語版（`README.ja.md`）へのリンク、`README.ja.md` に英語版（`README.md`）へのリンクを相互に追加。
+- **VS Code 設定警告の解決**:
+  - `.vscode/settings.json` における `editor.defaultFormatter` (`rust-lang.rust-analyzer`) の無効値警告を解決するため、該当設定項目を削除。推奨拡張機能ファイル `.vscode/extensions.json` を新規作成して補完。
+- **Clippy警告・エラーの修正**:
+  - `src/lib.rs` で発生していた Clippy 警告（ドキュメント後の不要な空行）を修正。
+  - テスト関数内の円周率近似リテラルによる Clippy エラーを回避するため、`#[allow(clippy::approx_constant)]` 属性を追加。
+
 ## [0.4.0] - 2026-06-26
 
 ### 追加 (Added)
