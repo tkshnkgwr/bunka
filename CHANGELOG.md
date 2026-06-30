@@ -5,6 +5,14 @@
 このファイルのフォーマットは [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) に基づいており、
 このプロジェクトは [セマンティック バージョニング](https://semver.org/spec/v2.0.0.html) に準拠しています。
 
+## [0.4.2] - 2026-06-30
+
+### 修正 (Fixed)
+- **GitHub Actions ワークフロー定義の修正**:
+  - `ci.yml` および `release.yml` において、無効なバージョンが指定されていた `actions/checkout@v7` を `actions/checkout@v4` に修正。
+  - `release.yml` において、無効なバージョンが指定されていた `softprops/action-gh-release@v3` を `softprops/action-gh-release@v2` に修正。
+  - これにより GitHub Actions の解析エラーが解消され、README のビルドステータスバッジが正常に表示されるように対応。
+
 ## [0.4.1] - 2026-06-30
 
 ### 追加 (Added)
