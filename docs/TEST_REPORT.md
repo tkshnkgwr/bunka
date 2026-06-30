@@ -7,7 +7,7 @@
 ## 1. テスト実行環境
 
 - **オペレーティングシステム**: Windows 11 Home x64
-- **Rust バージョン**: `rustc 1.94.1` (または edition 2024 対応コンパイラ)
+- **Rust バージョン**: `rustc 1.96.0` (edition 2024)
 - **シェル**: PowerShell 7 (`pwsh`)
 - **テスト対象プロファイル**: リリースビルド (`target/release/bunka.exe`)
 
@@ -134,8 +134,8 @@ PS bunka> cargo test
 ### 実行結果：
 ```powershell
 running 3 tests
-test tests::test_approximate_fraction_positive ... ok
 test tests::test_approximate_fraction_negative ... ok
+test tests::test_approximate_fraction_positive ... ok
 test tests::test_approximate_fraction_zero ... ok
 
 test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s

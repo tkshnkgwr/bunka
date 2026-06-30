@@ -5,9 +5,23 @@
 このファイルのフォーマットは [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) に基づいており、
 このプロジェクトは [セマンティック バージョニング](https://semver.org/spec/v2.0.0.html) に準拠しています。
 
-## [0.4.1] - 2026-06-26
+## [0.4.1] - 2026-06-30
+
+### 追加 (Added)
+- **開発環境のアップデートと検証**:
+  - 開発およびテストの実行環境を Rust 1.96.0 にアップデートし、CLI版・GUI版のビルド健全性および全単体テストが正常にパスすることを確認。
+  - Rust 1.96.0 環境でのバイナリフットプリント（ファイルサイズ）を再測定し、[docs/FOOTPRINTS.md](docs/FOOTPRINTS.md) および [docs/TEST_REPORT.md](docs/TEST_REPORT.md) を更新。
+- **READMEでのステータスバッジ追加**:
+  - `README.md` および `README.ja.md` のタイトル直下に、GitHub Actions の CI ビルドステータスバッジと MIT ライセンスバッジを追加。
+- **開発ガイドラインの更新**:
+  - `.agents/AGENTS.md` に、READMEの更新時にステータスバッジや多言語リンクの設置状況を維持・確認することを義務付けるルールを追加。
 
 ### 変更 (Changed)
+- **GUI版の不具合修正とUIの再調整**:
+  - 日本語環境を持たないデフォルトフォントでの文字化け（トーフ表示）を防ぐため、UI上のテキストをすべて英語（Decimal, Max Denom, Tolerance, RESULT, APPROXIMATION）に統一。
+  - 特殊な記号（✕、📋）も文字化けを防ぐため、ASCII文字（X、Copy）に変更。
+  - 画面レイアウトの見切れを防ぐため、ウィンドウの初期サイズを `300x195` から `320x220` に拡張。
+  - 枠なしウィンドウのヘッダー領域に対して明示的に `Sense::drag` を割り当て、ウィンドウ移動ができない不具合を修正。
 - **README.mdとREADME.ja.mdの相互リンク**:
   - `README.md` に日本語版（`README.ja.md`）へのリンク、`README.ja.md` に英語版（`README.md`）へのリンクを相互に追加。
 - **VS Code 設定警告の解決**:
@@ -15,6 +29,8 @@
 - **Clippy警告・エラーの修正**:
   - `src/lib.rs` で発生していた Clippy 警告（ドキュメント後の不要な空行）を修正。
   - テスト関数内の円周率近似リテラルによる Clippy エラーを回避するため、`#[allow(clippy::approx_constant)]` 属性を追加。
+- **ソースコードのフォーマット整形**:
+  - プロジェクト全体で `cargo fmt` を実行し、コードのインデントやスタイル規則を統一。
 
 ## [0.4.0] - 2026-06-26
 

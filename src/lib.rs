@@ -48,7 +48,7 @@ pub fn approximate_fraction(value: f64, max_denominator: u64, tolerance: f64) ->
         }
         r = 1.0 / diff;
         a = r.floor() as i64;
-        
+
         step += 1;
         if step > 50 {
             break;

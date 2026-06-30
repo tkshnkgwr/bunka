@@ -1,6 +1,6 @@
+use crate::approximate_fraction;
 use std::env;
 use std::process;
-use crate::approximate_fraction;
 
 /// CLI版のエントリーポイント
 pub fn run_cli() {
