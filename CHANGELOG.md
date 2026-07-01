@@ -5,7 +5,18 @@
 このファイルのフォーマットは [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) に基づいており、
 このプロジェクトは [セマンティック バージョニング](https://semver.org/spec/v2.0.0.html) に準拠しています。
 
+## [0.4.3] - 2026-07-01
+
+### 追加 (Added)
+- **Rustおよびプラットフォームのステータスバッジの追加**:
+  - `README.md` および `README.ja.md` のタイトル直下に、Rustのエディション（2024）および動作対象プラットフォーム（Windows | macOS | Linux）のバッジを追加。
+
+### 修正 (Fixed)
+- **ライセンスステータスバッジの表示不具合の修正**:
+  - `README.md` および `README.ja.md` のライセンスバッジ（MIT）の画像URLが大文字小文字の誤り（`License` ではなく `license`）により表示されていなかった問題を、正しいURL（`license-MIT-yellow.svg`）に修正することで解消。
+
 ## [0.4.2] - 2026-06-30
+
 
 ### 修正 (Fixed)
 - **GitHub Actions ワークフロー定義の修正**:

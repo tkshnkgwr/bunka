@@ -1,7 +1,9 @@
 # Bunka
 
 [![CI](https://github.com/tkshnkgwr/bunka/actions/workflows/ci.yml/badge.svg)](https://github.com/tkshnkgwr/bunka/actions/workflows/ci.yml)
-[![License: MIT](https://img.shields.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![License: MIT](https://img.shields.io/badge/license-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Rust](https://img.shields.io/badge/Rust-2024-orange?logo=rust)](https://www.rust-lang.org/)
+[![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20macOS%20%7C%20Linux-blue)](https://github.com/tkshnkgwr/bunka)
 
 [[日本語版はこちら]](README.ja.md)
 
